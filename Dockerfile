@@ -1,17 +1,9 @@
-FROM gradle:jdk21-jammy AS build
-WORKDIR /home/gradle/project
 
-# Alles kopieren
-COPY --chown=gradle:gradle . .
+FROM gradle:9-jdk25 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon
 
-# Gradlew ausführbar machen
-RUN chmod +x ./gradlew
-
-# Build mit Wrapper
-RUN ./gradlew build --no-daemon -x test
-
-FROM eclipse-temurin:21-jdk-jammy
-WORKDIR /app
-COPY --from=build /home/gradle/project/build/libs/*.jar app.jar
-EXPOSE 8080
+FROM eclipse-temurin:25-jdk-jammy
+COPY --from=build /home/gradle/src/build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
