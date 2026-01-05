@@ -1,39 +1,65 @@
 package com.example.demo;
 
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Entity
 public class Tournament {
 
+    @Id
+    @GeneratedValue
     private Long id;
-
     private String name;
-
-    private Map<Integer, String> player = new HashMap<>();
-    // Startposition und Name
-
-    private Map<Integer, String> results = new HashMap<>();
-    // Spielposition und Ergebnis als String (z.B. 2:1 weil erstmal einfacher)
-
-    private Map<String, Integer> scoreboard = new HashMap<>();
-    // Name und Anzahl der gewonnenen Turniere
-
     private String winner;
+    private String owner;
+
+
+    // Startposition und Name
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tournament_players")
+    @MapKeyColumn(name = "position")
+    @Column(name = "player_name")
+    private Map<Integer, String> players = new HashMap<>();
+
+
+    // Spielposition und Ergebnis als String (z.B. 2:1 weil erstmal einfacher)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tournament_results")
+    @MapKeyColumn(name = "match_position")
+    @Column(name = "result")
+    private Map<Integer, String> results = new HashMap<>();
+
+
+    // Name und Anzahl der gewonnenen Turniere
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tournament_scoreboard")
+    @MapKeyColumn(name = "player_name")
+    @Column(name = "points")
+    private Map<String, Integer> scoreboard = new HashMap<>();
+
 
     public Tournament() {}
 
-    public Tournament(String name) {
+    public Tournament(String name, String Winner, String Owner) {
         this.name = name;
+        this.winner = winner;
+        this.owner = owner;
     }
 
     // --- Getter & Setter ---
-/*
+
     public Long getId() {
         return id;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
@@ -42,6 +68,17 @@ public class Tournament {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public String getOwner() { return owner; }
+
 
     public Map<Integer, String> getPlayers() {
         return players;
@@ -67,13 +104,4 @@ public class Tournament {
         this.scoreboard = scoreboard;
     }
 
-    public String getWinner() {
-        return winner;
-    }
-
-    public void setWinner(String winner) {
-        this.winner = winner;
-    }
-
- */
 }

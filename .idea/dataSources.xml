@@ -5,7 +5,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://dpg-d4vgji7fte5s73fkifug-a.frankfurt-postgres.render.com/tournament_db_19rs:5432/tournament_db_19rs</jdbc-url>
+      <jdbc-url>jdbc:postgresql://dpg-d4vgji7fte5s73fkifug-a.frankfurt-postgres.render.com:5432/tournament_db_19rs</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
