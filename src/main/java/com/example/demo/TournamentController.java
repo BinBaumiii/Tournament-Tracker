@@ -40,4 +40,9 @@ public class TournamentController {
         }
         return service.getAllOwnedBy(owner);
     }
+
+    @DeleteMapping("/tournaments/{id}")
+    public void deleteTournament(@PathVariable Long id) {
+        service.delete(id);
+    }
 }
