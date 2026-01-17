@@ -10,22 +10,22 @@ import java.util.Map;
 public class Tournament {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String winner;
     private String owner;
 
-
-    // Startposition und Name
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tournament_players")
+    @CollectionTable(
+            name = "tournament_players",
+            joinColumns = @JoinColumn(name = "tournament_id") // <--- hier
+    )
     @MapKeyColumn(name = "position")
     @Column(name = "player_name")
-    private Map<Integer, String> players = new HashMap<Integer, String>();
+    private Map<Integer, String> players = new HashMap<>();
 
-
-    // Spielposition und Ergebnis als String (z.B. 2:1 weil erstmal einfacher)
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "tournament_results",
@@ -35,10 +35,11 @@ public class Tournament {
     @Column(name = "result")
     private Map<Integer, String> results = new HashMap<>();
 
-
-    // Name und Anzahl der gewonnenen Turniere
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tournament_scoreboard")
+    @CollectionTable(
+            name = "tournament_scoreboard",
+            joinColumns = @JoinColumn(name = "tournament_id")
+    )
     @MapKeyColumn(name = "player_name")
     @Column(name = "points")
     private Map<String, Integer> scoreboard = new HashMap<>();
