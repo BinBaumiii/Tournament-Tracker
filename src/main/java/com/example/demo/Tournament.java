@@ -10,7 +10,7 @@ import java.util.Map;
 public class Tournament {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String winner;
