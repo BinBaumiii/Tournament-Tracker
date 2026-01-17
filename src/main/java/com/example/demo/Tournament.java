@@ -3,9 +3,7 @@ package com.example.demo;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -24,12 +22,15 @@ public class Tournament {
     @CollectionTable(name = "tournament_players")
     @MapKeyColumn(name = "position")
     @Column(name = "player_name")
-    private Map<Integer, String> players = new HashMap<>();
+    private Map<Integer, String> players = new HashMap<Integer, String>();
 
 
     // Spielposition und Ergebnis als String (z.B. 2:1 weil erstmal einfacher)
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tournament_results")
+    @CollectionTable(
+            name = "tournament_results",
+            joinColumns = @JoinColumn(name = "tournament_id")
+    )
     @MapKeyColumn(name = "match_position")
     @Column(name = "result")
     private Map<Integer, String> results = new HashMap<>();

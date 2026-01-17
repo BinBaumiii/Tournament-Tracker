@@ -1,0 +1,37 @@
+POST http://localhost:8080/tournaments
+Content-Type: application/json
+
+{
+  "name": "Winter Cup 2026",
+  "winner": "Dennis",
+  "owner": "",
+  "players": {
+    "1": "Dennis",
+    "2": "Alex",
+    "3": "Chris",
+    "4": "Mia",
+    "5": "Oli",
+    "6": "Farrell",
+    "7": "David",
+    "8": "Leo"
+  },
+  "results": {
+    "1": "1:0",
+    "2": "1:0",
+    "3": "1:0",
+    "4": "1:0",
+    "5": "1:0",
+    "6": "1:0",
+    "7": "1:0"
+  },
+  "scoreboard": {
+    "Dennis": 1,
+    "Alex": 0,
+    "Chris": 0,
+    "Mia": 0,
+    "Oli": 0,
+    "Farrell": 0,
+    "David": 0,
+    "Leo": 0
+  }
+}
